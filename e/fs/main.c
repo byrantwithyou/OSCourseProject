@@ -47,8 +47,12 @@ PUBLIC void task_fs()
 		int msgtype = fs_msg.type;
 		int src = fs_msg.source;
 		pcaller = &proc_table[src];
-
+		char** pathname;
 		switch (msgtype) {
+		case LS:
+			do_ls(pathname);
+			fs_msg.PATHNAME = pathname;
+			break;
 		case OPEN:
 			fs_msg.FD = do_open();
 			break;
@@ -91,6 +95,7 @@ PUBLIC void task_fs()
 		msg_name[WRITE]  = "WRITE";
 		msg_name[LSEEK]  = "LSEEK";
 		msg_name[UNLINK] = "UNLINK";
+		msg_name[LS]   = "LS";
 		/* msg_name[FORK]   = "FORK"; */
 		/* msg_name[EXIT]   = "EXIT"; */
 		/* msg_name[STAT]   = "STAT"; */
@@ -104,6 +109,7 @@ PUBLIC void task_fs()
 		case CLOSE:
 		case READ:
 		case WRITE:
+		case LS:
 		case FORK:
 		case EXIT:
 		/* case LSEEK: */

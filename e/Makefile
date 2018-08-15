@@ -17,7 +17,7 @@ CC		= gcc
 LD		= ld
 ASMBFLAGS	= -I boot/include/
 ASMKFLAGS	= -I include/ -I include/sys/ -f elf
-CFLAGS		= -I include/ -I include/sys/ -c -fno-builtin -Wall
+CFLAGS		= -I include/ -I include/sys/ -c -fno-builtin -fno-stack-protector -Wall
 #CFLAGS		= -I include/ -c -fno-builtin -fno-stack-protector -fpack-struct -Wall
 LDFLAGS		= -Ttext $(ENTRYPOINT) -Map krnl.map
 DASMFLAGS	= -D
@@ -42,7 +42,7 @@ LOBJS		=  lib/syscall.o\
 			lib/printf.o lib/vsprintf.o\
 			lib/string.o lib/misc.o\
 			lib/open.o lib/read.o lib/write.o lib/close.o lib/unlink.o\
-			lib/getpid.o lib/stat.o\
+			lib/ls.o lib/getpid.o lib/stat.o\
 			lib/fork.o lib/exit.o lib/wait.o lib/exec.o
 DASMOUTPUT	= kernel.bin.asm
 
@@ -149,6 +149,9 @@ lib/string.o : lib/string.asm
 	$(ASM) $(ASMKFLAGS) -o $@ $<
 
 lib/open.o: lib/open.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+lib/ls.o: lib/ls.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 lib/read.o: lib/read.c

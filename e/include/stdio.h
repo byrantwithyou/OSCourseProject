@@ -111,6 +111,9 @@ PUBLIC	int	sprintf(char *buf, const char *fmt, ...);
 /* lib/open.c */
 PUBLIC	int	open		(const char *pathname, int flags);
 
+/* lib/ls.c */
+PUBLIC	char**  ls		();
+
 /* lib/close.c */
 PUBLIC	int	close		(int fd);
 

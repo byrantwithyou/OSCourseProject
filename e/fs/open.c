@@ -413,3 +413,12 @@ PRIVATE void new_dir_entry(struct inode *dir_inode,int inode_nr,char *filename)
 	/* update dir inode */
 	sync_inode(dir_inode);
 }
+
+/*****************************************************************************
+ *                               do_ls
+ *****************************************************************************/
+ PUBLIC char** do_ls(char **files)
+{
+	show_file(files);
+	return files;
+}

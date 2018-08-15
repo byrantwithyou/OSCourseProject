@@ -12,7 +12,7 @@ CFLAGS		= -I ../include/ -c -fno-builtin -fno-stack-protector -Wall
 LDFLAGS		= -Ttext 0x1000
 DASMFLAGS	= -D
 LIB		= ../lib/orangescrt.a
-BIN		= echo pwd
+BIN		= echo pwd lsc read write create delete
 
 # All Phony Targets
 .PHONY : everything final clean realclean disasm all install
@@ -52,3 +52,34 @@ pwd.o: pwd.c ../include/type.h ../include/stdio.h
 
 pwd : pwd.o start.o $(LIB)
 	$(LD) $(LDFLAGS) -o $@ $?
+
+lsc.o: lsc.c ../include/type.h ../include/stdio.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+lsc : lsc.o start.o $(LIB)
+	$(LD) $(LDFLAGS) -o $@ $?
+
+create.o: create.c ../include/type.h ../include/stdio.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+create : create.o start.o $(LIB)
+	$(LD) $(LDFLAGS) -o $@ $?
+
+delete.o: delete.c ../include/type.h ../include/stdio.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+delete : delete.o start.o $(LIB)
+	$(LD) $(LDFLAGS) -o $@ $?
+
+read.o: read.c ../include/type.h ../include/stdio.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+read : read.o start.o $(LIB)
+	$(LD) $(LDFLAGS) -o $@ $?
+
+write.o: write.c ../include/type.h ../include/stdio.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+write : write.o start.o $(LIB)
+	$(LD) $(LDFLAGS) -o $@ $?
+
