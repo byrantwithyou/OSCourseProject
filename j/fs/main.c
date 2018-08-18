@@ -44,9 +44,9 @@ PUBLIC void task_fs()
 		int msgtype = fs_msg.type;
 		int src = fs_msg.source;
 		pcaller = &proc_table[src];
+		char** pathname;
 		switch (msgtype) {
 		case LS:
-			char** pathname;
 			do_ls(pathname);
 			fs_msg.PATHNAME = pathname;
 			break;

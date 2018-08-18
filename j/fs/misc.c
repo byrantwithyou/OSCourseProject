@@ -181,9 +181,9 @@ PUBLIC char** show_file(char** all_f)
 				while (*s) {		/* check each character */
 					*t++ = *s++;
 				}
+				printl("%s\n",pde->name);
 				all_f[filenum]=eachf;
 				filenum++;
-				
 			}/*将filename放入eachf*/
 			if(filenum==19)
 				return all_f;

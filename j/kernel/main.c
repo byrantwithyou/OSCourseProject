@@ -168,12 +168,7 @@ void TestA()
 	char * filenames[] = {"/foo", "/bar", "/baz"};
 	/* ls */
 	char** p = ls();
-	for(int fnum = 0; fnum<20;fnum++){
-		if(strcmp("end",p[fnum])==0)
-			break;
-		printl("%s\n",p[fnum]);
-	}
-	printl("ls end\n");
+	
 	/* create files */
 	for (i = 0; i < sizeof(filenames) / sizeof(filenames[0]); i++) {
 		fd = open(filenames[i], O_CREAT | O_RDWR);

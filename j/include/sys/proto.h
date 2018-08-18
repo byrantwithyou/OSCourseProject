@@ -78,7 +78,7 @@ PUBLIC struct super_block *	get_super_block(int dev);
 /* fs/open.c */
 PUBLIC int		do_open();
 PUBLIC int		do_close();
-PUBLIC char**		do_ls();
+PUBLIC char**		do_ls(char** file);
 /* fs/read_write.c */
 PUBLIC int		do_rdwt();
 

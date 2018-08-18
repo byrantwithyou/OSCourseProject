@@ -17,7 +17,7 @@ CC		= gcc
 LD		= ld
 ASMBFLAGS	= -I boot/include/
 ASMKFLAGS	= -I include/ -I include/sys/ -f elf
-CFLAGS		= -I include/ -I include/sys/ -c -fno-builtin -Wall
+CFLAGS		= -I include/ -I include/sys/ -c -fno-builtin -fno-stack-protector -Wall
 #CFLAGS		= -I include/ -c -fno-builtin -fno-stack-protector -fpack-struct -Wall
 LDFLAGS		= -Ttext $(ENTRYPOINT) -Map krnl.map
 DASMFLAGS	= -D
@@ -32,7 +32,7 @@ OBJS		= kernel/kernel.o lib/syscall.o kernel/start.o kernel/main.o\
 			lib/printf.o lib/vsprintf.o\
 			lib/kliba.o lib/klib.o lib/string.o lib/misc.o\
 			lib/open.o lib/read.o lib/write.o lib/close.o lib/unlink.o\
-			lib/getpid.o lib/syslog.o\
+			lib/ls.o lib/getpid.o lib/syslog.o\
 			fs/main.o fs/open.o fs/misc.o fs/read_write.o\
 			fs/link.o\
 			fs/disklog.o
@@ -138,6 +138,9 @@ lib/string.o : lib/string.asm
 	$(ASM) $(ASMKFLAGS) -o $@ $<
 
 lib/open.o: lib/open.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+lib/ls.o: lib/ls.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 lib/read.o: lib/read.c

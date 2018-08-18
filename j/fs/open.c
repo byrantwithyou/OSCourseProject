@@ -420,7 +420,6 @@ PRIVATE void new_dir_entry(struct inode *dir_inode,int inode_nr,char *filename)
  *****************************************************************************/
  PUBLIC char** do_ls(char **files)
 {
-	
 	show_file(files);
 	return files;
 }

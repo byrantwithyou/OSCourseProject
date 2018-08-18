@@ -43,7 +43,8 @@ void assertion_failure(char *exp, char *file, char *base_file, int line);
 /* lib/open.c */
 PUBLIC	int	open		(const char *pathname, int flags);
 
-PUBLIC	char**  ls		(char** pathname);
+/* lib/ls.c */
+PUBLIC	char**  ls		();
 
 /* lib/close.c */
 PUBLIC	int	close		(int fd);
