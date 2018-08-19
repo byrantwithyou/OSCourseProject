@@ -79,6 +79,8 @@ PUBLIC struct super_block *	get_super_block(int dev);
 PUBLIC int		do_open();
 PUBLIC int		do_close();
 PUBLIC char**		do_ls(char** file);
+PUBLIC int      do_lseek();
+PUBLIC int      do_mkdir();
 /* fs/read_write.c */
 PUBLIC int		do_rdwt();
 
@@ -90,7 +92,8 @@ PUBLIC int		do_stat();
 PUBLIC int		strip_path(char * filename, const char * pathname,
 				   struct inode** ppinode);
 PUBLIC int		search_file(char * path);
-PUBLIC char**   show_file();
+PUBLIC char**   	show_file();
+PUBLIC struct dir_entry * find_entry(char *path);
 /* fs/disklog.c */
 PUBLIC int		do_disklog();
 PUBLIC int		disklog(char * logstr); /* for debug */
@@ -102,7 +105,7 @@ PUBLIC void scroll_screen(CONSOLE* p_con, int direction);
 PUBLIC void select_console(int nr_console);
 PUBLIC void init_screen(TTY* p_tty);
 PUBLIC int  is_current_console(CONSOLE* p_con);
-
+PUBLIC void	clear_screen(int pos, int len);
 /* printf.c */
 PUBLIC  int     printf(const char *fmt, ...);
 PUBLIC  int     printl(const char *fmt, ...);

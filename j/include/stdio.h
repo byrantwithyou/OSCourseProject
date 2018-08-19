@@ -44,7 +44,7 @@ void assertion_failure(char *exp, char *file, char *base_file, int line);
 PUBLIC	int	open		(const char *pathname, int flags);
 
 /* lib/ls.c */
-PUBLIC	char**  ls		();
+PUBLIC	int     ls		();
 
 /* lib/close.c */
 PUBLIC	int	close		(int fd);
@@ -63,4 +63,7 @@ PUBLIC int	getpid		();
 
 /* lib/syslog.c */
 PUBLIC	int	syslog		(const char *fmt, ...);
+
+/* lib/mkdir.c */
+PUBLIC	int     mkdir		(const char *pathname);
 

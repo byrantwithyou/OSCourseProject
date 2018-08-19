@@ -16,7 +16,7 @@
  *                               ls
  *****************************************************************************/
 
-PUBLIC char** ls()
+PUBLIC int ls(char* pathname)
 {
 	MESSAGE msg;
 
@@ -25,5 +25,5 @@ PUBLIC char** ls()
 	send_recv(BOTH, TASK_FS, &msg);
 	assert(msg.type == SYSCALL_RET);
 
-	return msg.PATHNAME;
+	return 1;
 }

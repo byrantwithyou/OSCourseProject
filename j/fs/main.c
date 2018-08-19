@@ -66,9 +66,12 @@ PUBLIC void task_fs()
 		case RESUME_PROC:
 			src = fs_msg.PROC_NR;
 			break;
-		/* case LSEEK: */
-		/* 	fs_msg.OFFSET = do_lseek(); */
-		/* 	break; */
+		case MKDIR:
+            fs_msg.RETVAL = do_mkdir();
+            break;
+		case LSEEK: 
+		 	fs_msg.OFFSET = do_lseek(); 
+			break; 
 		/* case FORK: */
 		/* 	fs_msg.RETVAL = fs_fork(); */
 		/* 	break; */
