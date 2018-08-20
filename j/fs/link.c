@@ -46,13 +46,13 @@ PUBLIC int do_unlink()
 	pathname[name_len] = 0;
 
 	if (strcmp(pathname , "/") == 0) {
-		printl("FS:do_unlink():: cannot unlink the root\n");
+		printf("FS:do_unlink():: cannot unlink the root\n");
 		return -1;
 	}
 
 	int inode_nr = search_file(pathname);
 	if (inode_nr == INVALID_INODE) {	/* file not found */
-		printl("FS::do_unlink():: search_file() returns "
+		printf("FS::do_unlink():: search_file() returns "
 			"invalid inode: %s\n", pathname);
 		return -1;
 	}
@@ -65,14 +65,14 @@ PUBLIC int do_unlink()
 	struct inode * pin = get_inode(dir_inode->i_dev, inode_nr);
 
 	if (pin->i_mode != I_REGULAR) { /* can only remove regular files */
-		printl("cannot remove file %s, because "
+		printf("cannot remove file %s, because "
 		       "it is not a regular file.\n",
 		       pathname);
 		return -1;
 	}
 
 	if (pin->i_cnt > 1) {	/* the file was opened */
-		printl("cannot remove file %s, because pin->i_cnt is %d.\n",
+		printf("cannot remove file %s, because pin->i_cnt is %d.\n",
 		       pathname, pin->i_cnt);
 		return -1;
 	}

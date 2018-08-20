@@ -47,9 +47,8 @@ PUBLIC void task_fs()
 		char** pathname;
 		switch (msgtype) {
 		case LS:
-			do_ls(pathname);
-			fs_msg.PATHNAME = pathname;
-			break;
+            fs_msg.RETVAL = do_ls();
+            break;
 		case OPEN:
 			fs_msg.FD = do_open();
 			break;
@@ -109,6 +108,7 @@ PUBLIC void task_fs()
 		case READ:
 		case WRITE:
 		case LS:
+		case MKDIR:
 		/* case FORK: */
 		/* case LSEEK: */
 		/* case EXIT: */

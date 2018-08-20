@@ -79,7 +79,7 @@ PUBLIC int do_open()
 
     struct inode * pin = 0;
 
-    printl("test1\n");
+
 
     if (flags & O_CREAT) {
         if (inode_nr) {
@@ -491,9 +491,64 @@ PRIVATE void new_dir_entry(struct inode *dir_inode,int inode_nr,char *filename)
 /*****************************************************************************
  *                               do_ls
  *****************************************************************************/
- PUBLIC char** do_ls(char **files)
+ PUBLIC int do_ls()
 {
-	show_file(files);
-	return files;
+	
+    char pathname[MAX_PATH];
+
+    /* get parameters from the message */
+    int flags = fs_msg.FLAGS;   /* access mode */
+    int name_len = fs_msg.NAME_LEN; /* length of filename */
+    int src = fs_msg.source;    /* caller proc nr. */
+    assert(name_len < MAX_PATH);
+
+    phys_copy((void*)va2la(TASK_FS, pathname),
+          (void*)va2la(src, fs_msg.PATHNAME),
+          name_len);
+    pathname[name_len] = 0;
+
+    int i, j;
+
+    /*printl("DO something \n");*/
+    /*char pathname[MAX_PATH] = "passwd";*/
+    /*int inode_nr = search_file(pathname);*/
+
+    //struct inode * dir_inode = root_inode;
+    struct inode * dir_inode;
+    char filename[20];
+    strip_path(filename, pathname,&dir_inode);
+
+    int dir_blk0_nr = dir_inode->i_start_sect;
+    int nr_dir_blks = (dir_inode->i_size + SECTOR_SIZE - 1) / SECTOR_SIZE;
+    int nr_dir_entries = dir_inode->i_size / DIR_ENTRY_SIZE;
+    int m = 0;
+
+    struct dir_entry * pde;
+
+    printl("\ninode        filename\n");
+    printl("============================\n");
+
+    for (i = 0; i < nr_dir_blks; i++)
+    {
+        RD_SECT(dir_inode->i_dev, dir_blk0_nr + i);
+
+        pde = (struct dir_entry *)fsbuf;
+
+        for (j = 0; j < SECTOR_SIZE / DIR_ENTRY_SIZE; j++, pde++)
+        {
+            /*struct inode *n = find_inode(pde->inode_nr);*/
+            printl("  %2d        %s\n", pde->inode_nr , pde->name);
+            if (++m >= nr_dir_entries){
+                printl("\n");
+                break;
+            }
+        }
+        if (m > nr_dir_entries) //[> all entries have been iterated <]
+            break;
+    }
+
+    printl("============================\n");
+
+    return 0;
 }
 

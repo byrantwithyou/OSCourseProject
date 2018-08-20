@@ -135,10 +135,8 @@ PUBLIC void addTwoString(char *to_str,char *from_str1,char *from_str2){
 
 void displayWelcomeInfo(){
     printf("=============================================================================\n");
-    printf("                                      L O S             \n");
-    printf("                                                        \n");
-    printf("                A simple operating system based on Orange's kernel \n\n");
-    printf("                    1552749 Liu Shuliang     1552739 Cao Junlu                          \n");
+    printf("                         OOOP OS                         \n");
+    printf("                    1652751 LJQ 165XXXX TMY 155XXXX SYX                       \n");
     printf("                                     Welcome !          \n");
     printf("=============================================================================\n");
 }
@@ -203,10 +201,10 @@ void clear()
 void doTest(char *path)
 {
     struct dir_entry *pde = find_entry(path);
-    printl(pde->name);
-    printl("\n");
-    printl(pde->pass);
-    printl("\n");
+    printf(pde->name);
+    printf("\n");
+    printf(pde->pass);
+    printf("\n");
 }
 
 int verifyFilePass(char *path, int fd_stdin)
@@ -215,12 +213,12 @@ int verifyFilePass(char *path, int fd_stdin)
 
     struct dir_entry *pde = find_entry(path);
 
-    /*printl(pde->pass);*/
+    /*printf(pde->pass);*/
 
     if (strcmp(pde->pass, "") == 0)
         return 1;
 
-    printl("Please input the file password: ");
+    printf("Please input the file password: ");
     read(fd_stdin, pass, 128);
 
     if (strcmp(pde->pass, pass) == 0)
@@ -236,12 +234,12 @@ void doEncrypt(char *path, int fd_stdin)
 
     char pass[128] = {0};
 
-    printl("Please input the new file password: ");
+    printf("Please input the new file password: ");
     read(fd_stdin, pass, 128);
 
     if (strcmp(pass, "") == 0)
     {
-        /*printl("A blank password!\n");*/
+        /*printf("A blank password!\n");*/
         strcpy(pass, "");
     }
     //以下内容用于加密
@@ -546,6 +544,9 @@ void shell(char *tty_name){
     char arg2[512];
     char buf[1024];
     char temp[512];
+   
+          
+    
 
     int fd_stdin  = open(tty_name, O_RDWR);
     assert(fd_stdin  == 0);
@@ -556,12 +557,10 @@ void shell(char *tty_name){
     clear();
     //animation_l();
     
-    
+     displayWelcomeInfo();
+     printf("\n               You may type 'help' to get more information.\n");
    
-    if(strcmp(tty_name, "/dev_tty0")==0){
-           displayWelcomeInfo();
-           printf("\n               You may type 'help' to get more information.\n");
-    }
+    
    	
 
    char current_dirr[512] = "/";
@@ -842,16 +841,35 @@ void shell(char *tty_name){
                 arg2[j++] = '/';
                 arg2[j]=0;
                 memcpy(arg1, arg2, 512);
+		
             }
             else if(strcmp(arg1, "/")!=0){
-
                 for(i=0;arg1[i]!=0;i++){}
                 arg1[i++] = '/';
                 arg1[i] = 0;
             }
             printf("%s\n", arg1);
-            fd = open(arg1, O_RDWR);
-
+	    int nump=0;
+           char eachf[512];
+		memset(eachf,0,sizeof(eachf)); 
+		const char *s = arg1;
+		char *t = eachf;
+				if(arg1[0]=="/")
+					*s++;
+				while (*s) {	
+					*t++ = *s++;
+				}
+		t = eachf;
+		while (*t) {	
+			char *ps = t+1;
+			if(*ps==0){
+				if(*t == '/')
+				*t = 0;			
+			}		
+			t++;
+		}	
+            fd = open(eachf, O_RDWR);
+            printf("%s\n", eachf);
             if(fd == -1){
                 printf("The path not exists!Please check the pathname!\n");
             }
@@ -871,7 +889,12 @@ void shell(char *tty_name){
  *======================================================================*/
 void TestA()
 {
-	while(1);
+
+	
+	//while(1);
+	char tty_name[] = "/dev_tty0";
+	shell(tty_name);
+	assert(0); /* never arrive here */
 }
 
 /*======================================================================*
@@ -890,6 +913,8 @@ void TestB()
  *======================================================================*/
 void TestC()
 {
+	//char tty_name[] = "/dev_tty2";
+	//shell(tty_name);
 	spin("TestC");
 	/* assert(0); */
 }

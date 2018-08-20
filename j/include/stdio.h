@@ -67,3 +67,6 @@ PUBLIC	int	syslog		(const char *fmt, ...);
 /* lib/mkdir.c */
 PUBLIC	int     mkdir		(const char *pathname);
 
+/* lib/sl.c     */
+PUBLIC void     sl              ();
+

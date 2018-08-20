@@ -16,14 +16,18 @@
  *                               ls
  *****************************************************************************/
 
-PUBLIC int ls(char* pathname)
+PUBLIC int ls(char *pathname)
 {
-	MESSAGE msg;
+    MESSAGE msg;
+    msg.type = LS;
 
-	msg.type	= LS;
 
-	send_recv(BOTH, TASK_FS, &msg);
-	assert(msg.type == SYSCALL_RET);
+	msg.PATHNAME	= (void*)pathname;
+	msg.FLAGS	= 0;
+	msg.NAME_LEN	= strlen(pathname);
 
-	return 1;
+    send_recv(BOTH, TASK_FS, &msg);
+
+    return msg.RETVAL;
 }
+
